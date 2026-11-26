@@ -2,7 +2,7 @@ let page = 1;
 
 const statusText = document.getElementById("status");
 const results = document.getElementById("results");
-const pageLabel = document.getElementById("pageLabel");
+const pageLabel = document.getElementById("page-label");
 const prevButton = document.getElementById("prev-btn");
 const nextButton = document.getElementById("next-btn");
 
@@ -22,6 +22,12 @@ async function loadPage() {
 
     const data = await response.json();
     console.log(data);
+    let totalPages = Math.ceil(data.info.count / 20);
+    console.log(totalPages);
+    pageLabel.textContent = `page ${page} of ${totalPages}`;
+    nextButton.disabled = page === 42;
+    prevButton.disabled = page ===1;
+
 
     statusText.textContent = "";
 
@@ -43,7 +49,7 @@ function prevPage() {
     page = page - 1;
     loadPage();
 }
-prevButton.addEventListener("click", nextPage);
+prevButton.addEventListener("click", prevPage);
 
 
 
